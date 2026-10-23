@@ -20,13 +20,11 @@ def main():
         if choice == '1':
             user_input = input("Введите СНИЛС или текст для поиска: ")
             if is_valid_snils_syntax(user_input):
-                print(f"[+] Строка '{user_input.strip()}' является корректным СНИЛС.")
+                print(f"[+] Строка '{user_input.strip()}' является синтаксически корректным СНИЛС.")
             else:
                 found = find_snils_in_text(user_input)
-                if len(found) > 0:
-                    print("[+] Найдено СНИЛС в тексте:")
-                    for s in found:
-                        print(f"  * {s}")
+                if found:
+                    print(f"[+] Найдено СНИЛС в тексте ({len(found)} шт.): {', '.join(found)}")
                 else:
                     print("[-] Синтаксически корректных СНИЛС не обнаружено.")
 
@@ -49,9 +47,9 @@ def main():
             url = input("Введите URL страницы (с http:// или https://): ").strip()
             try:
                 found = find_snils_in_url(url)
-                if len(found) > 0:
+                if found:
                     print(f"[+] Найдено на странице ({len(found)} шт.):")
-                    for item in found:
+                    for item in set(found):
                         print(f"  - {item}")
                 else:
                     print("[-] На странице СНИЛС не найдены.")
